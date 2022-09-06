@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: practica-01-jenkins-deployment
+spec:
+  selector:
+   matchLabels:
+    app: practica-01-jenkins
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: practica-01-jenkins
+    spec:
+      containers:
+        - name: practica-01-jenkins
+          image: 'aldavid/practica-demo:tag'
+          ports:
+            - containerPort: 8080
+              name: practica-01port
+          imagePullPolicy: Always
+          env:
+          - name: nombre
+            value: "David"
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: practica-01-jenkins-service
+  labels:
+    app: practica-01-jenkins
+spec:   
+  ports:
+  - name: practica-01-jenkins
+    port: 8080
+    nodePort : 31785
+  #type: LoadBalancer
+  type: NodePort
+  selector:
+   app: practica-01-jenkins

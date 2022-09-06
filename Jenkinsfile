@@ -1,3 +1,4 @@
+def gitTag = null
 pipeline {
     agent any
     environment {
@@ -68,9 +69,9 @@ pipeline {
             steps {
               script {
     			// crear variable para el TAG
-			sh(returnStdout: true, script: "git tag --sort version:refname	
+			gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()	
 		}
-		 sh 'echo $TAG'
+		 sh 'echo $gitTag'
 		 
             
              

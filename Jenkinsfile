@@ -1,4 +1,3 @@
-def gitTag = null
 pipeline {
     agent any
     environment {

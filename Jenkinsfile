@@ -51,7 +51,7 @@ pipeline {
 
 	stage('verificar variable de entorno') {
             steps {
-                   sh 'echo $GLOBAL_ENVIRONMENT'
+                   sh 'echo $BRANCH_NAME'
                    }
         }
 }

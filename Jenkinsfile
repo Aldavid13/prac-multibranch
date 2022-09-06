@@ -3,6 +3,7 @@ pipeline {
     environment {
         registry = "<dockerhub-username>/<repo-name>"
         registryCredential = '<dockerhub-credential-name>'
+        GLOBAL_ENVIRONMENT = 'NO_DEPLOYMENT'
     }
     tools {
         gradle "GRADLE7"

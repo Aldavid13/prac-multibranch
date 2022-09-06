@@ -74,6 +74,7 @@ pipeline {
 			TAG = sh('git tag')	
 		}
 		 sh 'echo $TAG'
+		 sh(returnStdout: true, script: "git tag --sort version:refname | tail -1").trim()
             
              }
         }

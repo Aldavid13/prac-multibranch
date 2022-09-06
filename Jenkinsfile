@@ -64,6 +64,19 @@ pipeline {
 		   sh 'echo $TAG'					
                    }
         }
+        stage('Variable para el TAG') {
+            steps {
+              withCredentials([gitUsernamePassword(credentialsId: '726eb245-32d1-4417-ab4a-0033fdd16e5e', gitToolName: 'Default')]) {
+    		// some block
+		
+		script {
+    			// crear variable para el TAG
+			TAG = sh('git tag')	
+		}
+            
+             }
+        }
+}
 }
 }
 

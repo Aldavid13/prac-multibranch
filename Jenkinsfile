@@ -56,9 +56,10 @@ pipeline {
                    sh 'echo ahora con la global environment'
                    sh 'echo $GLOBAL_ENVIRONMENT'
                    sh '''sed -i "s|tag|$BUILD_NUMBER|g" deployment-services-practica-01-jenkins.yaml
-			 sed -i "s|namespace-var|$BRANCH_NAME|g" deployment-services-practica-01-jenkins.yaml
-			 cat deployment-services-practica-01-jenkins.yaml
-		      '''
+			cat deployment-services-practica-01-jenkins.yaml
+			sed -i "s|namespace-var|$BRANCH_NAME|g" deployment-services-practica-01-jenkins.yaml
+			cat deployment-services-practica-01-jenkins.yaml
+		   '''
                    }
         }
 }

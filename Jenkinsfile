@@ -45,8 +45,15 @@ pipeline {
             }
       }
         
-    }
-}
+    		}
+	}
+
+
+	stage('verificar variable de entorno') {
+            steps {
+                   sh 'echo $GLOBAL_ENVIRONMENT'
+                   }
+        }
 }
 }
 

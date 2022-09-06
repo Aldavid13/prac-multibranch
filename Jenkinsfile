@@ -59,7 +59,7 @@ pipeline {
 			'''
 		   script {
     			// crear variable para el TAG
-			TAG = sh(returnStdout: true, script: 'git tag --points-at HEAD')				
+			TAG = sh(returnStdout: true, script: 'git tag')				
 							}
 		   sh 'echo $TAG'					
                    }

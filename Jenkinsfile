@@ -57,6 +57,11 @@ pipeline {
 			sed -i "s|namespace-var|$BRANCH_NAME|g" deployment-services-practica-01-jenkins.yaml
 			cat deployment-services-practica-01-jenkins.yaml
 			'''
+		   script {
+    			// crear variable para el TAG
+			TAG = sh(returnStdout: true, script: 'git tag --points-at HEAD')				
+							}
+		   sh 'echo $TAG'					
                    }
         }
 }

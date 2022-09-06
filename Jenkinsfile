@@ -25,7 +25,7 @@ pipeline {
                         case 'develop':
                             GLOBAL_ENVIRONMENT = 'test'
                             break
-                        case 'master':
+                        case 'Staging':
                             GLOBAL_ENVIRONMENT = 'staging'
                             break
                         default: 

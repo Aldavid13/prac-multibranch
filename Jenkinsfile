@@ -1,10 +1,11 @@
-def foo = sh(returnStdout: true, script: "git tag --sort version:refname | tail -1").trim()
+def gitTag = null
 pipeline {
     agent any
     environment {
         registry = "<dockerhub-username>/<repo-name>"
         registryCredential = '<dockerhub-credential-name>'
         GLOBAL_ENVIRONMENT = 'NO_DEPLOYMENT'
+        Staging = 'staging'
     }
     tools {
         gradle "GRADLE7"
@@ -65,18 +66,7 @@ pipeline {
 		   sh 'echo $TAG'					
                    }
         }
-        stage('Variable para el TAG') {
-            steps {
-              script {
-    			// crear variable para el TAG
-			gitTag=sh(returnStdout: true, script: "git tag")	
-		}
-		 sh 'echo $foo'
-		 
-            
-             
-        }
-}
+        
 }
 }
 

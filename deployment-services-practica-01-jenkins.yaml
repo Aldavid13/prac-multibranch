@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: practica-01-jenkins-deployment
+  namespace: namespace-var
 spec:
   selector:
    matchLabels:
@@ -28,6 +29,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: practica-01-jenkins-service
+  namespace: namespace-var
   labels:
     app: practica-01-jenkins
 spec:   

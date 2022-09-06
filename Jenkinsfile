@@ -1,4 +1,4 @@
-def gitTag = null
+def foo = sh(returnStdout: true, script: "git tag --sort version:refname | tail -1").trim()
 pipeline {
     agent any
     environment {
@@ -71,7 +71,7 @@ pipeline {
     			// crear variable para el TAG
 			gitTag=sh(returnStdout: true, script: "git tag")	
 		}
-		 sh 'echo $gitTag'
+		 sh 'echo $foo'
 		 
             
              

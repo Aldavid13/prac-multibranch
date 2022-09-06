@@ -69,7 +69,7 @@ pipeline {
             steps {
               script {
     			// crear variable para el TAG
-			gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()	
+			gitTag=sh(returnStdout: true, script: "git tag").trim()	
 		}
 		 sh 'echo $gitTag'
 		 

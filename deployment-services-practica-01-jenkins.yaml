@@ -37,7 +37,7 @@ spec:
   - name: practica-01-jenkins
     port: 8080
     nodePort : 31785
-  #type: LoadBalancer
+  #type: LoadBalancer-
   type: NodePort
   selector:
    app: practica-01-jenkins

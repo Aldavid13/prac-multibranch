@@ -73,6 +73,7 @@ pipeline {
     			// crear variable para el TAG
 			TAG = sh('git tag')	
 		}
+		 sh 'echo $TAG'
             
              }
         }

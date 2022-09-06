@@ -68,7 +68,7 @@ pipeline {
             steps {
               script {
     			// crear variable para el TAG
-			sh(returnStdout: true, script: "git tag --sort version:refname | tail -1").trim()	
+			sh(returnStdout: true, script: "git tag --sort version:refname	
 		}
 		 sh 'echo $TAG'
 		 

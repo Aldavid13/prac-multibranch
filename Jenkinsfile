@@ -35,12 +35,12 @@ pipeline {
         }
        
         
-        stage('Deploy practica-01-jenkins App') {
+        stage('Deploy practica-02-jenkins App') {
             steps {
                 withCredentials(bindings: [
                       string(credentialsId: 'minikube-jenkins', variable: 'api_token')
                       ]) {
-                        sh 'kubectl --token $api_token --server https://192.168.49.2:8443 --insecure-skip-tls-verify=true apply -f deployment-services-practica-01-jenkins.yaml '
+                        sh 'kubectl --token $api_token --server https://192.168.49.2:8443 --insecure-skip-tls-verify=true get namespaces '
                         }
 
             }

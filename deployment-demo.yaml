@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: practica-02-deployment-multibranch
-  namespace: namespace-var
+  namespace: staging
 spec:
   selector:
    matchLabels:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: practica-02-jenkins
-          image: 'aldavid/practica-demo-namespace-var:tag'
+          image: 'aldavid/practica-demo-staging:8'
           ports:
             - containerPort: 8080
               name: practica-01port
@@ -29,7 +29,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: practica-02-jenkins-service
-  namespace: namespace-var
+  namespace: staging
   labels:
     app: practica-02-jenkins
 spec:   

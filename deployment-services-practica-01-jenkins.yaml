@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: practica-01-jenkins
-          image: 'aldavid/practica-demo:tag'
+          image: 'aldavid/practica-demo-namespace-var:tag'
           ports:
             - containerPort: 8080
               name: practica-01port

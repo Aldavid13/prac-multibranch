@@ -3,8 +3,6 @@ pipeline {
     environment {
         registry = "<dockerhub-username>/<repo-name>"
         registryCredential = '<dockerhub-credential-name>'
-        GLOBAL_ENVIRONMENT = 'NO_DEPLOYMENT'
-        Staging = 'staging'
     }
     tools {
         gradle "GRADLE7"
@@ -12,60 +10,47 @@ pipeline {
     }
 
     stages {
-        
-        stage('Setup environment') {
+        stage('Descargar Git') {
             steps {
-                echo 'Setup environment'
-                
-                script {
-                    // Determine whether this is a test or a staging / production build                    
-                    switch (env.BRANCH_NAME) {
-                        case 'develop':
-                            GLOBAL_ENVIRONMENT = 'test'
-                            break
-                        case 'Staging':
-                            GLOBAL_ENVIRONMENT = 'staging'
-                            break
-                        default: 
-                            GLOBAL_ENVIRONMENT = 'NO_DEPLOYMENT'
-                            break
-                    }
-
-                    // Get tag on current branch
-                    TAG = sh(returnStdout: true, script: 'git tag --points-at HEAD')
-
-                    if (TAG && GLOBAL_ENVIRONMENT == 'staging') {
-                        echo 'Build for production'
-                        
-                        
-        
-       
-            }
-      }
-        
-    		}
-	}
-
-
-	stage('verificar variable de entorno') {
+                   git credentialsId: '726eb245-32d1-4417-ab4a-0033fdd16e5e', url: 'https://github.com/Aldavid13/practica1.git'  
+                   }
+        }
+        stage('Build Gradle') {
             steps {
-                   sh 'echo $BRANCH_NAME'
-                   sh 'echo ahora con la global environment'
-                   sh 'echo $GLOBAL_ENVIRONMENT'
-                   sh 'echo $TAG_NAME'
-                   sh 'echo $BUILD_TAG'
-                   sh '''sed -i "s|tag|$BUILD_NUMBER|g" deployment-services-practica-01-jenkins.yaml
-			sed -i "s|namespace-var|$BRANCH_NAME|g" deployment-services-practica-01-jenkins.yaml
-			cat deployment-services-practica-01-jenkins.yaml
-			'''
-		   script {
-    			// crear variable para el TAG
-			TAG = sh(returnStdout: true, script: 'git tag')				
-							}
-		   sh 'echo $TAG'					
+                sh 'gradle build'
                    }
         }
         
-}
+        stage('Change Variable tag y namespaces') {
+            steps {
+                sh '''sed -i "s|tag|$BUILD_NUMBER|g" deployment-services-practica-01-jenkins.yaml
+			sed -i "s|namespace-var|$BRANCH_NAME|g" deployment-services-practica-01-jenkins.yaml
+			cat deployment-services-practica-01-jenkins.yaml
+			'''
+                   }
+        }
+        
+       stage('Building image') {
+           steps {
+            step([$class: 'DockerBuilderPublisher', cleanImages: true, cleanupWithJenkinsJobDelete: false, cloud: 'docker', dockerFileDirectory: '.', fromRegistry: [credentialsId: 'dockerhub', url: 'https://hub.docker.com/repository/docker/aldavid/practica-demo-$BRANCH_NAME'], pushCredentialsId: 'dockerhub', pushOnSuccess: true, tagsString: '''aldavid/practica-demo-$BRANCH_NAME:$BUILD_NUMBER
+                aldavid/practica-demo:latest'''])
+
+           }
+        
+        }
+       
+        
+        stage('Deploy practica-01-jenkins App') {
+            steps {
+                withCredentials(bindings: [
+                      string(credentialsId: 'minikube-jenkins', variable: 'api_token')
+                      ]) {
+                        sh 'kubectl --token $api_token --server https://192.168.49.2:8443 --insecure-skip-tls-verify=true apply -f deployment-services-practica-01-jenkins.yaml '
+                        }
+
+            }
+      }
+        
+    }
 }
 

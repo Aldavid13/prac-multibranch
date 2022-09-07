@@ -10,11 +10,6 @@ pipeline {
     }
 
     stages {
-        stage('Descargar Git') {
-            steps {
-                   git credentialsId: '726eb245-32d1-4417-ab4a-0033fdd16e5e', url: 'https://github.com/Aldavid13/practica1.git'  
-                   }
-        }
         stage('Build Gradle') {
             steps {
                 sh 'gradle build'

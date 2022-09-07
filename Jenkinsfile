@@ -40,7 +40,7 @@ pipeline {
                 withCredentials(bindings: [
                       string(credentialsId: 'minikube-jenkins', variable: 'api_token')
                       ]) {
-                        sh 'kubectl --token $api_token --server https://192.168.49.2:8443 --insecure-skip-tls-verify=true config use-context staging '
+                        sh 'kubectl --token $api_token --server https://192.168.49.2:8443 --insecure-skip-tls-verify=true config view '
                         }
 
             }

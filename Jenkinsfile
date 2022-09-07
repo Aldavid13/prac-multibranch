@@ -28,7 +28,7 @@ pipeline {
        stage('Building image') {
            steps {
             step([$class: 'DockerBuilderPublisher', cleanImages: true, cleanupWithJenkinsJobDelete: false, cloud: 'docker', dockerFileDirectory: '.', fromRegistry: [credentialsId: 'dockerhub', url: 'https://hub.docker.com/repository/docker/aldavid/practica-demo-$BRANCH_NAME'], pushCredentialsId: 'dockerhub', pushOnSuccess: true, tagsString: '''aldavid/practica-demo-$BRANCH_NAME:$BUILD_NUMBER
-                aldavid/practica-demo:latest'''])
+                aldavid/practica-demo-$BRANCH_NAME:latest'''])
 
            }
         

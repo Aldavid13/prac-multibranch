@@ -16,7 +16,7 @@ pipeline {
                    }
         }
         
-        stage('Cambiar Variables "tag" y "namespace-var"') {
+        stage('Cambiar Variables "tag" y- "namespace-var"') {
             steps {
                 sh '''sed -i "s|tag|$BUILD_NUMBER|g" deployment-services-practica-01-jenkins.yaml
 			sed -i "s|namespace-var|$BRANCH_NAME|g" deployment-services-practica-01-jenkins.yaml

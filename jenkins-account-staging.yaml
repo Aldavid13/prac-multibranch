@@ -10,7 +10,7 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: jenkins
-  namespace: staging
+  namespace: production
 rules:
 - apiGroups: [""]
   resources: ["pods","services"]
@@ -36,7 +36,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: jenkins
-  namespace: staging
+  namespace: production
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
